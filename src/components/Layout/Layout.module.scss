@@ -1,0 +1,30 @@
+.layout {
+}
+
+.navbar {
+  @apply w-full p-4 px-6 bg-black fixed top-0 flex items-center justify-between;
+  box-shadow: 0px 24px 8px -24px #303030;
+  &__left {
+    @apply flex items-center;
+    &__logoCont {
+      @apply flex items-center mr-3;
+      h3 {
+        @apply text-xl;
+      }
+    }
+
+    &__logo {
+      @apply rounded-md p-2 bg-blue-50 mr-2;
+    }
+
+    &__links {
+      @apply ml-3 font-[600];
+      @apply mx-2 px-[12px] py-[8px] rounded-[20px] text-sm;
+      a {
+      }
+      a:hover {
+        @apply bg-blue-600;
+      }
+    }
+  }
+}

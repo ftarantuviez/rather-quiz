@@ -1,0 +1,20 @@
+.summaryCard {
+  &__header {
+    @apply text-3xl w-full;
+  }
+
+  &__divider {
+    @apply w-full h-[1px] bg-zinc-800 my-5;
+  }
+
+  &__summaryCont {
+    @apply w-full;
+  }
+
+  &__question {
+    @apply my-4;
+  }
+  &__answer {
+    @apply border border-gray-800 bg-black p-3 rounded-md;
+  }
+}

@@ -1,0 +1,32 @@
+.surveyCard {
+  &__header {
+    @apply w-full flex justify-between items-center;
+    h3 {
+      @apply text-3xl;
+    }
+  }
+
+  &__counter {
+    @apply text-red-500;
+  }
+
+  &__divider {
+    @apply w-full h-[1px] bg-zinc-800 my-5;
+  }
+
+  &__image {
+    @apply w-[100px];
+  }
+
+  &__optionsCont {
+    @apply mt-4 flex flex-col items-start w-full;
+  }
+
+  &__option {
+    @apply p-5 border border-zinc-800 rounded-md w-full cursor-pointer mb-2;
+    transition: 0.3s;
+    &:hover {
+      @apply bg-[#dae0e714];
+    }
+  }
+}

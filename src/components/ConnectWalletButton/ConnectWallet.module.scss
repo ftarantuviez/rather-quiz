@@ -1,0 +1,19 @@
+.connectWalletButton {
+  @apply text-lightBlue bg-black px-4 py-2 rounded-lg flex items-center text-lg;
+  transition: 0.3s;
+
+  &:hover {
+    @apply bg-lightBlue text-white;
+  }
+
+  svg {
+    @apply ml-2;
+  }
+
+  &__contained {
+    @apply text-white px-6 py-3 rounded-none font-[500] leading-8 bg-lightBlue;
+    &:hover {
+      @apply bg-white text-black;
+    }
+  }
+}
