@@ -1,8 +1,17 @@
+"use client";
 import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
+import useWalletContext from "@/hooks/useWalletContext";
 import Image from "next/image";
+
 import React from "react";
+import { redirect } from "next/navigation";
 
 const Page = () => {
+  const { activeAccount, loading } = useWalletContext();
+
+  if (activeAccount) redirect("/");
+
+  if (loading) return <h1>LOADINF</h1>;
   return (
     <main className="flex h-[100vh] items-center justify-around p-24 text-white">
       <div className="w-[50%]">

@@ -1,0 +1,17 @@
+.startQuizCard {
+  &__header {
+    @apply text-3xl w-full;
+  }
+
+  &__divider {
+    @apply w-full h-[1px] bg-zinc-800 my-5;
+  }
+
+  &__start {
+    @apply px-6 py-2 bg-blue-500 font-[500] rounded-md;
+
+    &:hover {
+      @apply bg-blue-600;
+    }
+  }
+}

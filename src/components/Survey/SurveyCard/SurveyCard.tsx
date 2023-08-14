@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./SurveyCard.module.scss";
 import Image from "next/image";
 import useCounter from "@/hooks/useCounter";
-import Card from "../Card/Card";
+import Card from "../../Card/Card";
 
 type SurveyCardProps = {
   question: string;
@@ -28,6 +28,7 @@ const SurveyCard = (props: SurveyCardProps) => {
   const onAnswerSelect = (answer: string) => () => {
     handleSelectAnswer(answer);
   };
+
   return (
     <Card>
       <div className={styles.surveyCard__header}>

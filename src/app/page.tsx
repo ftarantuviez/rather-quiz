@@ -1,8 +1,11 @@
 "use client";
 
-import SummaryCard from "@/components/SummaryCard/SummaryCard";
-import SurveyCard from "@/components/SurveyCard/SurveyCard";
+import SummaryCard from "@/components/Survey/SummaryCard/SummaryCard";
+import SurveyCard from "@/components/Survey/SurveyCard/SurveyCard";
+import useWalletContext from "@/hooks/useWalletContext";
 import { useState } from "react";
+import { redirect } from "next/navigation";
+import StartQuizCard from "@/components/Survey/StartQuizCard/StartQuizCard";
 
 const MOCK_DATA = {
   title: "Sample Survey",
@@ -46,7 +49,7 @@ const MOCK_DATA = {
       text: "Pregunta 3",
       image:
         "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-      lifetimeSeconds: 5,
+      lifetimeSeconds: 15,
       options: [
         {
           text: "Opt1",
@@ -62,39 +65,61 @@ const MOCK_DATA = {
   ],
 };
 export default function Home() {
+  const { activeAccount } = useWalletContext();
   const [survey, setSurvey] = useState(MOCK_DATA);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
+  const [answers, setAnswers] = useState<
+    { question: string; answer: string }[]
+  >([]);
 
-  const onNextQuestion = () => {
+  const onNextQuestion = (answered?: boolean) => {
     const nextQuestion = currentQuestion + 1;
     setCurrentQuestion(nextQuestion);
-    /*  if (survey.questions.length < nextQuestion + 1) {
-    } else {
-    } */
+    if (!answered) {
+      setAnswers([...answers, { question: questionDetails.text, answer: "" }]);
+    }
   };
 
   const handleSelectAnswer = (answer: string) => {
-    onNextQuestion();
+    setAnswers([
+      ...answers,
+      { question: questionDetails.text, answer: answer },
+    ]);
+    onNextQuestion(true);
   };
 
-  const questionDetails = survey.questions[currentQuestion];
+  const handleStartQuiz = () => {
+    setCurrentQuestion(0);
+  };
 
+  const questionDetails =
+    currentQuestion !== null ? survey.questions[currentQuestion] : {};
+
+  if (!activeAccount) redirect("/login");
+
+  const surveyCard = (
+    <SurveyCard
+      question={questionDetails?.text}
+      image={"/images/loginBgImage.png"}
+      lifetimeSeconds={questionDetails?.lifetimeSeconds}
+      options={questionDetails?.options}
+      onNextQuestion={onNextQuestion}
+      handleSelectAnswer={handleSelectAnswer}
+    />
+  );
+
+  const summary = <SummaryCard questions={answers} />;
+  const start = (
+    <StartQuizCard title={survey.title} handleStartQuiz={handleStartQuiz} />
+  );
+
+  const isCurrentQuestion = currentQuestion !== null;
+  const showSummary = currentQuestion === survey.questions.length;
   return (
     <main className="flex h-[100vh] justify-around p-24 text-white">
-      {currentQuestion === survey.questions.length ? (
-        <SummaryCard
-          questions={[{ answer: "Opt 1", question: "What fruit is this one?" }]}
-        />
-      ) : (
-        <SurveyCard
-          question={questionDetails.text}
-          image={"/images/loginBgImage.png"}
-          lifetimeSeconds={questionDetails.lifetimeSeconds}
-          options={questionDetails.options}
-          onNextQuestion={onNextQuestion}
-          handleSelectAnswer={handleSelectAnswer}
-        />
-      )}
+      {!isCurrentQuestion && start}
+      {isCurrentQuestion && !showSummary && surveyCard}
+      {showSummary && summary}
     </main>
   );
 }

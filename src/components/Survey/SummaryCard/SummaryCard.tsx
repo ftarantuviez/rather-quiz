@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Card/Card";
+import Card from "../../Card/Card";
 import styles from "./SummaryCard.module.scss";
 
 type SummaryCardProps = {
@@ -17,9 +17,16 @@ const SummaryCard = (props: SummaryCardProps) => {
         {questions?.map((question) => (
           <div className={styles.summaryCard__question} key={question.question}>
             <h4 className="mb-2 text-lg">{question.question}</h4>
-            <div className={styles.summaryCard__answer}>{question.answer}</div>
+            <div
+              className={`${styles.summaryCard__answer} ${styles.summaryCard__answer__error} ${styles.summaryCard__answer__success}`}
+            >
+              {question.answer}
+            </div>
           </div>
         ))}
+      </div>
+      <div className="flex w-full justify-end mt-4">
+        <button className={styles.summaryCard__submit}>Submit</button>
       </div>
     </Card>
   );

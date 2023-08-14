@@ -16,5 +16,20 @@
   }
   &__answer {
     @apply border border-gray-800 bg-black p-3 rounded-md;
+
+    &__error {
+      @apply border-red-900;
+    }
+    &__success {
+      @apply border-green-900;
+    }
+  }
+
+  &__submit {
+    @apply px-6 py-2 bg-blue-500 font-[500] rounded-md;
+
+    &:hover {
+      @apply bg-blue-600;
+    }
   }
 }
