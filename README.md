@@ -44,4 +44,4 @@ Introducing "QuizToken": The app that rewards your quiz-solving skills with QUIZ
 ---
 
 The app is deployed in Vercel.
-You can find a production version in [this url](TODO).
+You can find a production version in [this url](https://rather-quiz.vercel.app/).
