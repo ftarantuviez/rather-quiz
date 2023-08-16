@@ -6,6 +6,7 @@ import useWalletContext from "@/hooks/useWalletContext";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import StartQuizCard from "@/components/Survey/StartQuizCard/StartQuizCard";
+import { IQuestion, ISurvey } from "@/types/survey";
 
 const MOCK_DATA = {
   title: "Sample Survey",
@@ -65,38 +66,40 @@ const MOCK_DATA = {
   ],
 };
 export default function Home() {
-  const { activeAccount } = useWalletContext();
-  const [survey, setSurvey] = useState(MOCK_DATA);
+  const { activeAccount, submitAnswers, loading } = useWalletContext();
+  const [survey, setSurvey] = useState<ISurvey>(MOCK_DATA);
   const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
-  const [answers, setAnswers] = useState<
-    { question: string; answer: string }[]
-  >([]);
+  const [answers, setAnswers] = useState<number[]>([]);
 
   const onNextQuestion = (answered?: boolean) => {
-    const nextQuestion = currentQuestion + 1;
+    const nextQuestion = currentQuestion !== null ? currentQuestion + 1 : null;
     setCurrentQuestion(nextQuestion);
     if (!answered) {
-      setAnswers([...answers, { question: questionDetails.text, answer: "" }]);
+      setAnswers([...answers, 999]);
     }
   };
 
-  const handleSelectAnswer = (answer: string) => {
-    setAnswers([
-      ...answers,
-      { question: questionDetails.text, answer: answer },
-    ]);
+  const handleSelectAnswer = (answer: number) => {
+    setAnswers([...answers, answer]);
     onNextQuestion(true);
   };
 
-  const handleStartQuiz = () => {
-    setCurrentQuestion(0);
+  const handleStartQuiz = () => setCurrentQuestion(0);
+
+  const onSubmitSurvey = () => {
+    submitAnswers(9, answers);
   };
 
   const questionDetails =
-    currentQuestion !== null ? survey.questions[currentQuestion] : {};
+    currentQuestion !== null
+      ? survey.questions[currentQuestion]
+      : ({} as IQuestion);
 
   if (!activeAccount) redirect("/login");
 
+  const start = (
+    <StartQuizCard title={survey.title} handleStartQuiz={handleStartQuiz} />
+  );
   const surveyCard = (
     <SurveyCard
       question={questionDetails?.text}
@@ -107,14 +110,18 @@ export default function Home() {
       handleSelectAnswer={handleSelectAnswer}
     />
   );
-
-  const summary = <SummaryCard questions={answers} />;
-  const start = (
-    <StartQuizCard title={survey.title} handleStartQuiz={handleStartQuiz} />
+  const summary = (
+    <SummaryCard
+      loading={loading}
+      answers={answers}
+      survey={survey}
+      onSubmit={onSubmitSurvey}
+    />
   );
 
   const isCurrentQuestion = currentQuestion !== null;
   const showSummary = currentQuestion === survey.questions.length;
+
   return (
     <main className="flex h-[100vh] justify-around p-24 text-white">
       {!isCurrentQuestion && start}

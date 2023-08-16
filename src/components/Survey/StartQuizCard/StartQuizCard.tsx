@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../../Card/Card";
 import styles from "./StartQuizCard.module.scss";
 import Image from "next/image";
+import useWalletContext from "@/hooks/useWalletContext";
 
 type StartQuizCardProps = {
   handleStartQuiz: () => void;
@@ -9,6 +10,7 @@ type StartQuizCardProps = {
 };
 const StartQuizCard = (props: StartQuizCardProps) => {
   const { handleStartQuiz, title } = props;
+  const { isGoerliNetwork } = useWalletContext();
   return (
     <Card>
       <h3 className={styles.startQuizCard__header}>{title}</h3>
@@ -22,12 +24,19 @@ const StartQuizCard = (props: StartQuizCardProps) => {
       />
 
       <div className="flex w-full justify-end mt-4">
-        <button
-          className={styles.startQuizCard__start}
-          onClick={handleStartQuiz}
-        >
-          Start quiz
-        </button>
+        {isGoerliNetwork ? (
+          <button
+            className={styles.startQuizCard__start}
+            onClick={handleStartQuiz}
+            disabled={!isGoerliNetwork}
+          >
+            Start quiz
+          </button>
+        ) : (
+          <p className="text-white text-sm">
+            Switch to Goerli Network to start
+          </p>
+        )}
       </div>
     </Card>
   );

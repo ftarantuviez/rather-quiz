@@ -1,12 +1,25 @@
 import React from "react";
 import Card from "../../Card/Card";
 import styles from "./SummaryCard.module.scss";
+import { ISurvey } from "@/types/survey";
 
 type SummaryCardProps = {
-  questions: { question: string; answer: string }[];
+  answers: (number | null)[];
+  onSubmit: () => void;
+  survey: ISurvey;
+  loading: boolean;
 };
+
 const SummaryCard = (props: SummaryCardProps) => {
-  const { questions } = props;
+  const { answers, onSubmit, survey, loading } = props;
+
+  const questions = survey.questions.map((quest, i) => {
+    return {
+      question: quest.text,
+      answer: quest.options[answers[i] as number]?.text ?? "",
+    };
+  });
+
   return (
     <Card>
       <h3 className={styles.summaryCard__header}>Survey summary</h3>
@@ -26,7 +39,11 @@ const SummaryCard = (props: SummaryCardProps) => {
         ))}
       </div>
       <div className="flex w-full justify-end mt-4">
-        <button className={styles.summaryCard__submit}>Submit</button>
+        {!loading && (
+          <button className={styles.summaryCard__submit} onClick={onSubmit}>
+            Submit
+          </button>
+        )}
       </div>
     </Card>
   );

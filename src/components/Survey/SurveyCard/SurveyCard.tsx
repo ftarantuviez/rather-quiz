@@ -12,7 +12,7 @@ type SurveyCardProps = {
   image: string;
   options: { text: string }[];
   onNextQuestion: () => void;
-  handleSelectAnswer: (answer: string) => void;
+  handleSelectAnswer: (answer: number) => void;
 };
 const SurveyCard = (props: SurveyCardProps) => {
   const {
@@ -23,9 +23,10 @@ const SurveyCard = (props: SurveyCardProps) => {
     onNextQuestion,
     handleSelectAnswer,
   } = props;
+
   const counter = useCounter(lifetimeSeconds, onNextQuestion);
 
-  const onAnswerSelect = (answer: string) => () => {
+  const onAnswerSelect = (answer: number) => () => {
     handleSelectAnswer(answer);
   };
 
@@ -47,11 +48,11 @@ const SurveyCard = (props: SurveyCardProps) => {
         className="my-4"
       />
       <div className={styles.surveyCard__optionsCont}>
-        {options?.map((option) => (
+        {options?.map((option, i) => (
           <div
             className={styles.surveyCard__option}
             key={option.text}
-            onClick={onAnswerSelect(option.text)}
+            onClick={onAnswerSelect(i)}
           >
             {option.text}
           </div>

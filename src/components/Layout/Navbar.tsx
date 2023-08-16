@@ -13,7 +13,7 @@ export type TNavBarProps = {
 };
 
 export const NavBar: FC<TNavBarProps> = ({ className }) => {
-  const { activeAccount, isGoerliNetwork } = useWalletContext();
+  const { activeAccount, isGoerliNetwork, quizBalance } = useWalletContext();
 
   return (
     <div className={`${styles.navbar} ${className}`}>
@@ -24,7 +24,7 @@ export const NavBar: FC<TNavBarProps> = ({ className }) => {
       </div>
       <div className={styles.navbar__right}>
         {activeAccount && isGoerliNetwork && (
-          <p className="text-white">455 QUIZ</p>
+          <p className="text-white">{quizBalance} QUIZ</p>
         )}
         {activeAccount && !isGoerliNetwork && (
           <p className="text-white">Switch network</p>
