@@ -130,15 +130,17 @@ const WalletProvider: FC<WalletProviderProps> = ({ children }) => {
     }
   }, [activeAccount, contract, isGoerliNetwork]);
 
-  window?.ethereum?.on("accountsChanged", async (accounts: string[]) => {
-    if (accounts.length === 0) setActiveAccount("");
-    else setActiveAccount(accounts[0]);
-  });
+  if (typeof window !== "undefined") {
+    window?.ethereum?.on("accountsChanged", async (accounts: string[]) => {
+      if (accounts.length === 0) setActiveAccount("");
+      else setActiveAccount(accounts[0]);
+    });
 
-  window?.ethereum?.on("chainChanged", (chain: string) => {
-    if (chain === GOERLI_HEX_ID) setIsGoerliNetwork(true);
-    else setIsGoerliNetwork(false);
-  });
+    window?.ethereum?.on("chainChanged", (chain: string) => {
+      if (chain === GOERLI_HEX_ID) setIsGoerliNetwork(true);
+      else setIsGoerliNetwork(false);
+    });
+  }
 
   const values: WalletProviderValues = {
     activeAccount,
