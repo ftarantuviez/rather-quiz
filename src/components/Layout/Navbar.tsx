@@ -3,7 +3,7 @@
 import type { FC } from "react";
 
 import styles from "./Layout.module.scss";
-
+import { TbExchange } from "react-icons/tb";
 import RatherLabsLogo from "../../../public/icons/RatherLabsLogo";
 import ConnectWalletButton from "../ConnectWalletButton/ConnectWalletButton";
 import useWalletContext from "@/hooks/useWalletContext";
@@ -13,7 +13,8 @@ export type TNavBarProps = {
 };
 
 export const NavBar: FC<TNavBarProps> = ({ className }) => {
-  const { activeAccount, isGoerliNetwork, quizBalance } = useWalletContext();
+  const { activeAccount, isGoerliNetwork, quizBalance, switchNetworkToGoerli } =
+    useWalletContext();
 
   return (
     <div className={`${styles.navbar} ${className}`}>
@@ -27,7 +28,13 @@ export const NavBar: FC<TNavBarProps> = ({ className }) => {
           <p className="text-white">{quizBalance} QUIZ</p>
         )}
         {activeAccount && !isGoerliNetwork && (
-          <p className="text-white">Switch network</p>
+          <button
+            className={styles.navbar__switchNetButton}
+            onClick={switchNetworkToGoerli}
+          >
+            Switch network
+            <TbExchange />
+          </button>
         )}
         {!activeAccount && <ConnectWalletButton />}
       </div>

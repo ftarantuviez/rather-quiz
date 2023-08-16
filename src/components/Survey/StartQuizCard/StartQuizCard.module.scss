@@ -8,10 +8,14 @@
   }
 
   &__start {
-    @apply px-6 py-2 bg-blue-500 font-[500] rounded-md;
+    @apply px-6 py-2 mt-5 bg-blue-500 font-[500] rounded-md;
 
     &:hover {
       @apply bg-blue-600;
     }
+  }
+
+  &__button {
+    @apply flex w-full justify-end mt-8;
   }
 }

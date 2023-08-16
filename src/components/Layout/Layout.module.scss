@@ -1,6 +1,3 @@
-.layout {
-}
-
 .navbar {
   @apply w-full p-4 px-6 bg-black fixed top-0 flex items-center justify-between;
   box-shadow: 0px 24px 8px -24px #303030;
@@ -25,6 +22,16 @@
       a:hover {
         @apply bg-blue-600;
       }
+    }
+  }
+
+  &__switchNetButton {
+    @apply flex items-center text-white p-2;
+    &:hover {
+      @apply bg-gray-900;
+    }
+    svg {
+      @apply ml-3;
     }
   }
 }

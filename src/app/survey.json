@@ -1,0 +1,55 @@
+{
+  "title": "Fruit Survey",
+  "image": "https://clipart-library.com/image_gallery2/Fruit.png",
+  "id": 990,
+  "questions": [
+    {
+      "text": "What fruit is this one?",
+      "image": "https://cdn.pixabay.com/photo/2016/02/23/17/42/orange-1218158_1280.png",
+      "lifetimeSeconds": 4,
+      "options": [
+        {
+          "text": "Apple"
+        },
+        {
+          "text": "Banana"
+        },
+        {
+          "text": "Orange"
+        }
+      ]
+    },
+    {
+      "text": "How is this fruit called?",
+      "image": "https://static.vecteezy.com/system/resources/previews/008/848/350/original/fresh-yellow-banana-fruit-free-png.png",
+      "lifetimeSeconds": 10,
+      "options": [
+        {
+          "text": "Kiwi"
+        },
+        {
+          "text": "Banana"
+        },
+        {
+          "text": "Melon"
+        }
+      ]
+    },
+    {
+      "text": "What fruit is the one on the picture?",
+      "image": "https://static.vecteezy.com/system/resources/previews/008/848/360/original/fresh-apple-fruit-free-png.png",
+      "lifetimeSeconds": 5,
+      "options": [
+        {
+          "text": "Apple"
+        },
+        {
+          "text": "Grape"
+        },
+        {
+          "text": "Cherry"
+        }
+      ]
+    }
+  ]
+}

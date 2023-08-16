@@ -2,7 +2,7 @@
   &__header {
     @apply w-full flex justify-between items-center;
     h3 {
-      @apply text-3xl;
+      @apply text-xl md:text-3xl;
     }
   }
 

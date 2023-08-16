@@ -7,7 +7,7 @@ const nextConfig = {
         hostname: "**",
       },
     ],
-    domains: ["*.com"],
+    domains: ["clipart-library.com"],
   },
 };
 

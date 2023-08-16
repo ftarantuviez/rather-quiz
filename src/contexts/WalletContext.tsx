@@ -4,7 +4,7 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { WalletProviderProps, WalletProviderValues } from "./types";
 import { GOERLI_HEX_ID, GOERLI_ID } from "@/constants/network";
-import Web3 from "web3";
+
 import {
   CONTRACT_ABI,
   CONTRACT_ADDRESS,
@@ -56,11 +56,13 @@ const WalletProvider: FC<WalletProviderProps> = ({ children }) => {
     try {
       const tx = await contract?.submit(surveyId, answers);
       await tx.wait();
+      await getQuizBalance();
       setLoading(false);
     } catch (error) {
       setLoading(false);
       alert("There was an error submiting the answers");
       console.log(error);
+      throw error;
     }
   };
 
@@ -117,16 +119,16 @@ const WalletProvider: FC<WalletProviderProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (activeAccount) {
+    if (activeAccount && isGoerliNetwork) {
       getContract();
     }
-  }, [activeAccount]);
+  }, [activeAccount, isGoerliNetwork]);
 
   useEffect(() => {
-    if (activeAccount && contract) {
+    if (activeAccount && contract && isGoerliNetwork) {
       getQuizBalance();
     }
-  }, [activeAccount, contract]);
+  }, [activeAccount, contract, isGoerliNetwork]);
 
   window?.ethereum?.on("accountsChanged", async (accounts: string[]) => {
     if (accounts.length === 0) setActiveAccount("");

@@ -31,7 +31,11 @@ const SummaryCard = (props: SummaryCardProps) => {
           <div className={styles.summaryCard__question} key={question.question}>
             <h4 className="mb-2 text-lg">{question.question}</h4>
             <div
-              className={`${styles.summaryCard__answer} ${styles.summaryCard__answer__error} ${styles.summaryCard__answer__success}`}
+              className={`${styles.summaryCard__answer} ${
+                question.answer
+                  ? styles.summaryCard__answer__success
+                  : styles.summaryCard__answer__error
+              }`}
             >
               {question.answer}
             </div>
@@ -39,11 +43,13 @@ const SummaryCard = (props: SummaryCardProps) => {
         ))}
       </div>
       <div className="flex w-full justify-end mt-4">
-        {!loading && (
-          <button className={styles.summaryCard__submit} onClick={onSubmit}>
-            Submit
-          </button>
-        )}
+        <button
+          className={styles.summaryCard__submit}
+          onClick={onSubmit}
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Submit"}
+        </button>
       </div>
     </Card>
   );

@@ -1,0 +1,19 @@
+.login {
+  @apply flex h-[100vh] items-center justify-around md:p-24 p-6 pt-24 text-white flex-col-reverse md:flex-row;
+
+  &__leftCont {
+    @apply md:w-[50%] w-[80%] pb-6;
+  }
+
+  &__title {
+    @apply md:text-6xl text-4xl font-[600] mb-8;
+  }
+
+  &__desc {
+    @apply md:text-lg leading-8 mb-9;
+  }
+
+  &__rightCont {
+    @apply md:w-[50%] sm:w-[40%] w-[60%] flex items-end justify-center;
+  }
+}

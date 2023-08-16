@@ -7,67 +7,11 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import StartQuizCard from "@/components/Survey/StartQuizCard/StartQuizCard";
 import { IQuestion, ISurvey } from "@/types/survey";
+import styles from "./Home.module.scss";
+import survey from "./survey.json";
 
-const MOCK_DATA = {
-  title: "Sample Survey",
-  image: "https://48tools.com/wp-content/uploads/2015/09/shortlink.png",
-  questions: [
-    {
-      text: "Question1",
-      image:
-        "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-      lifetimeSeconds: 4,
-      options: [
-        {
-          text: "Opt1",
-        },
-        {
-          text: "Opt2",
-        },
-        {
-          text: "Opt",
-        },
-      ],
-    },
-    {
-      text: "Question2",
-      image:
-        "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-      lifetimeSeconds: 5,
-      options: [
-        {
-          text: "Opt1",
-        },
-        {
-          text: "Opt2",
-        },
-        {
-          text: "Opt",
-        },
-      ],
-    },
-    {
-      text: "Pregunta 3",
-      image:
-        "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-      lifetimeSeconds: 15,
-      options: [
-        {
-          text: "Opt1",
-        },
-        {
-          text: "Opt2",
-        },
-        {
-          text: "Opt",
-        },
-      ],
-    },
-  ],
-};
 export default function Home() {
   const { activeAccount, submitAnswers, loading } = useWalletContext();
-  const [survey, setSurvey] = useState<ISurvey>(MOCK_DATA);
   const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
 
@@ -86,8 +30,13 @@ export default function Home() {
 
   const handleStartQuiz = () => setCurrentQuestion(0);
 
-  const onSubmitSurvey = () => {
-    submitAnswers(9, answers);
+  const onSubmitSurvey = async () => {
+    try {
+      await submitAnswers(survey.id, answers);
+      setAnswers([]);
+      setCurrentQuestion(null);
+      alert("Survey Submitted successfully");
+    } catch (error) {}
   };
 
   const questionDetails =
@@ -98,12 +47,16 @@ export default function Home() {
   if (!activeAccount) redirect("/login");
 
   const start = (
-    <StartQuizCard title={survey.title} handleStartQuiz={handleStartQuiz} />
+    <StartQuizCard
+      title={survey.title}
+      image={survey.image}
+      handleStartQuiz={handleStartQuiz}
+    />
   );
   const surveyCard = (
     <SurveyCard
       question={questionDetails?.text}
-      image={"/images/loginBgImage.png"}
+      image={questionDetails?.image}
       lifetimeSeconds={questionDetails?.lifetimeSeconds}
       options={questionDetails?.options}
       onNextQuestion={onNextQuestion}
@@ -123,7 +76,7 @@ export default function Home() {
   const showSummary = currentQuestion === survey.questions.length;
 
   return (
-    <main className="flex h-[100vh] justify-around p-24 text-white">
+    <main className={styles.home}>
       {!isCurrentQuestion && start}
       {isCurrentQuestion && !showSummary && surveyCard}
       {showSummary && summary}
